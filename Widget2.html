@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+
+        .ratingContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .star {
+            width: 50px;
+            height: 50px;
+            border: 1px gold solid;
+            margin: 4px;
+        }
+
+        .star:hover,
+        .star:hover~ 
+        .star {
+            background-color: gold;
+            cursor: pointer;
+        }
+
+        .selected {
+            background-color: gold;
+        }
+
+        .hat{
+            width: 50px;
+            height: 50px;
+            background-color: green;
+            margin: 4px;
+            margin-top: 50px;
+        }
+        .hat:hover,
+        .hat:hover~.hat
+        {
+            background-color: red;
+        }
+
+        .hat-container{
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .cap {
+            width: 50px;
+            height: 50px;
+            background-color: black;
+            margin: 4px;
+        }
+        .cap ~ .cap-after{
+            width: 50px;
+            height: 50px;
+            background-color: green;
+            margin: 4px;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div class="ratingContainer">
+            <div class="rating">
+                <div data-rate="5" class="star"></div>
+                <div data-rate="4" class="star"></div>
+                <div data-rate="3" class="star"></div>
+                <div data-rate="2" class="star"></div>
+                <div data-rate="1" class="star"></div>
+            </div>
+            <div class="ratingResult"></div>
+
+
+        </div>
+        <script>
+            const productId = "ID_12345";
+            const ratingResult = document.querySelector(".ratingResult");
+            const stars = document.querySelectorAll(".star");
+            console.log(stars);
+            stars.forEach((star) => {
+                star.addEventListener("click", () => {
+                    const rating = star.dataset.rate;
+                    console.log("rating:", rating);
+
+                    // print rating
+                    ratingResult.innerText = `${rating} star rating`;
+
+                    // clear stars
+                    stars.forEach((s) => {
+                        console.log(s.classList);
+                        if (s.classList.contains("selected")) {
+                            s.classList.remove("selected");
+                        }
+                    });
+
+                    // add selected class to stars until rating
+                    stars.forEach((s) => {
+                        if (s.dataset.rate <= rating) {
+                            s.classList.add("selected");
+                        }
+                    });
+
+                    // send post request or do something with rating
+                    console.log({
+                        productId,
+                        rating
+                    });
+                });
+            });
+
+    </script>
+    </body>
+
+</html>
